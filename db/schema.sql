@@ -10,8 +10,8 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS job;
-CREATE TABLE job (
+DROP TABLE IF EXISTS role;
+CREATE TABLE role (
     id INT AUTO_INCREMENT NOT NULL,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(19,2) NOT NULL,
@@ -31,8 +31,10 @@ CREATE TABLE employee (
     manager_id INT DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (role_id)
-    REFERENCES job(id),
+    REFERENCES role(id),
     FOREIGN KEY (manager_id)
     REFERENCES employee(id)
     ON DELETE SET NULL
 );
+
+DELETE TABLE IF EXISTS job;

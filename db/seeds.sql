@@ -4,7 +4,7 @@ VALUES ("Sales"),
        ("Finance"),
        ("Legal");
 
-INSERT INTO job (title, salary, dapartment_id)
+INSERT INTO role (title, salary, dapartment_id)
 VALUES  ("Sales Manager", 100000.00, 1),
         ("Salesperson", 80000.00, 1),
         ("Lead Engineer", 150000.00, 2),
