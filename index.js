@@ -52,17 +52,17 @@ const intro = () => {
                 viewAllRoles();
                 break;
 
-            case choices[4]:
-                addRole();
-                break;
+            // case choices[4]:
+            //     addRole();
+            //     break;
 
             case choices[5]:
                 viewAllDepartments();
                 break;
 
-            // case choices[6]:
-            //     ();
-            //     break;
+            case choices[6]:
+                addDepartment();
+                break;
 
             case choices[7]:
                 quit();
@@ -72,7 +72,7 @@ const intro = () => {
 }
 
 const viewEmployees = () => {
-    let employees = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary, employee.manager_id FROM role LEFT JOIN employee ON role.id = employee.role_id LEFT JOIN department ON department.id = role.dapartment_id'
+    let employees = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary, employee.manager_id FROM role LEFT JOIN employee ON role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id'
 
     connection.query(employees, (err, results) => {
         if (err) throw err
@@ -119,7 +119,7 @@ const addEmployee = () => {
         ])
 
      
-        connection.query('SELECT distinct title , id FROM role;', async (err, results) => {
+        connection.query('SELECT distinct title, id FROM role;', async (err, results) => {
            if (err) throw err
 
             let roles = results.map(element=>(
@@ -127,15 +127,13 @@ const addEmployee = () => {
                 value:element.id})
             )
     
-
-            const getRole =  await inquirer.prompt([
+            const getRole = await inquirer.prompt([
                 {
                     name: "role",
                     type: "list",
                     message: "What is employee's role",
                     choices: roles
                 }
-
             ])
 
             connection.query("INSERT INTO employee SET ?",
@@ -143,8 +141,7 @@ const addEmployee = () => {
                     first_name: getPersonInfo.firstName,
                     last_name: getPersonInfo.lastName,
                     role_id: getRole.role,
-                    manager_id: getPersonInfo.manager
-    
+                    manager_id: getPersonInfo.manager    
                 }, (err) => {
                     if (err) throw err
                     intro()
@@ -208,40 +205,15 @@ const updateEmployeeRole = () => {
 }
 
 const viewAllRoles = () => {
-    let allRoles = 'SELECT role.title, department.department_name AS department, role.salary FROM role LEFT JOIN department ON department.id = role.dapartment_id;'
-    connection.query(allRoles, (err, results) => {
+    connection.query('SELECT role.title, department.department_name AS department, role.salary FROM role LEFT JOIN department ON department.id = role.department_id;', (err, results) => {
         if (err) throw err
         console.table(results)
         intro()
     })
 }
 
-// const addRole = () => {
-//     connection.query('SELECT * FROM role', async (err, results) => {
-//         if (err) throw err
-//     })
-
-//     const getRoleInfo = await inquirer.prompt([
-//         {
-//             name: 'title',
-//             type: 'input',
-//             message: 'Enter role:'
-//         },
-//         {
-//             name: 'salary',
-//             type: 'input',
-//             message: 'Enter salary'
-//         }
-//     ])
-
-//     connection.query('SELECT distinct department_name, id FROM department'), async (err, results) => {
-//         if (err) throw err
-//     }
-// }
-
 const viewAllDepartments = () => {
-    let allDepartments = 'SELECT department.department_name FROM department'
-    connection.query(allDepartments, (err, results) => {
+    connection.query('SELECT department.department_name FROM department', (err, results) => {
         if (err) throw err
         console.table(results)
         intro()
