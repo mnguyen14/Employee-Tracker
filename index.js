@@ -56,9 +56,9 @@ const intro = () => {
                 addRole();
                 break;
 
-            // case choices[5]:
-            //     ();
-            //     break;
+            case choices[5]:
+                viewAllDepartments();
+                break;
 
             // case choices[6]:
             //     ();
@@ -72,9 +72,9 @@ const intro = () => {
 }
 
 const viewEmployees = () => {
-    let queryInfo = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary, employee.manager_id FROM role LEFT JOIN employee ON role.id = employee.role_id LEFT JOIN department ON department.id = role.dapartment_id'
+    let employees = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.department_name AS department, role.salary, employee.manager_id FROM role LEFT JOIN employee ON role.id = employee.role_id LEFT JOIN department ON department.id = role.dapartment_id'
 
-    connection.query(queryInfo, (err, results) => {
+    connection.query(employees, (err, results) => {
         if (err) throw err
         console.table(results)
         intro();
@@ -98,8 +98,7 @@ const addEmployee = () => {
             }
         })
  
-        const getPersonInfo = await inquirer.prompt
-           ([
+        const getPersonInfo = await inquirer.prompt([
             {
                 name: "firstName",
                 type: "input",
@@ -123,7 +122,7 @@ const addEmployee = () => {
         connection.query('SELECT distinct title , id FROM role;', async (err, results) => {
            if (err) throw err
 
-            let roles =   results.map(element=>(
+            let roles = results.map(element=>(
                 {name:`${element.title}`, 
                 value:element.id})
             )
@@ -195,7 +194,7 @@ const updateEmployeeRole = () => {
                 }
             ]));
 
-            connection.query('UPDATE employee  SET ? WHERE ? ',
+            connection.query('UPDATE employee SET ? WHERE ? ',
                 [
                     {role_id:roleId.roleId},
                     {id:nameId.name}
@@ -209,16 +208,44 @@ const updateEmployeeRole = () => {
 }
 
 const viewAllRoles = () => {
-    let queryByRoles = 'SELECT role.title, department.department_name AS department, role.salary FROM role LEFT JOIN department ON department.id = role.dapartment_id;'
-    connection.query(queryByRoles, (err, results) => {
+    let allRoles = 'SELECT role.title, department.department_name AS department, role.salary FROM role LEFT JOIN department ON department.id = role.dapartment_id;'
+    connection.query(allRoles, (err, results) => {
         if (err) throw err
         console.table(results)
         intro()
     })
 }
 
-const addRole = () => {
-    
+// const addRole = () => {
+//     connection.query('SELECT * FROM role', async (err, results) => {
+//         if (err) throw err
+//     })
+
+//     const getRoleInfo = await inquirer.prompt([
+//         {
+//             name: 'title',
+//             type: 'input',
+//             message: 'Enter role:'
+//         },
+//         {
+//             name: 'salary',
+//             type: 'input',
+//             message: 'Enter salary'
+//         }
+//     ])
+
+//     connection.query('SELECT distinct department_name, id FROM department'), async (err, results) => {
+//         if (err) throw err
+//     }
+// }
+
+const viewAllDepartments = () => {
+    let allDepartments = 'SELECT department.department_name FROM department'
+    connection.query(allDepartments, (err, results) => {
+        if (err) throw err
+        console.table(results)
+        intro()
+    })
 }
 
 const quit = () => {
