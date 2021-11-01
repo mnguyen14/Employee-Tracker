@@ -22,6 +22,10 @@ Run "npm install" in your terminal
 ## Usage
 Run "node index" in your terminal. You will be prompted with a selection of choices you could choose from.
 
+![Notes html app](https://i.gyazo.com/f6e93688bda3178752afa29c5b38ebe0.png)
+
+You use your arrow keys to navigate up and down to select the option you would like to do.
+
 Here is a video demoing the app.
 
 [![Demo of app](https://i9.ytimg.com/vi/E5Yn37-KHVA/mq3.jpg?sqp=CPjwgYwG&rs=AOn4CLA5snwB6i_YnzLRvEIQAcK7wiaPmg)](https://www.youtube.com/watch?v=E5Yn37-KHVA)
