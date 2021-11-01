@@ -36,5 +36,3 @@ CREATE TABLE employee (
     REFERENCES employee(id)
     ON DELETE SET NULL
 );
-
-DELETE TABLE IF EXISTS job;
